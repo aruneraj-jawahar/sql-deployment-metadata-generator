@@ -1,1 +1,33 @@
+application:
+  name: SQL Deployment Metadata Generator
+  version: 1.0.0
 
+input:
+  sql_directory: sample_sql
+
+output:
+  output_directory: output
+  excel_file: deployment_metadata.xlsx
+
+environments:
+  dev:
+    schema: dev_schema
+  test:
+    schema: test_schema
+  uat:
+    schema: uat_schema
+  prod:
+    schema: prod_schema
+
+logging:
+  level: INFO
+  file: logs/application.log
+
+metadata:
+  supported_operations:
+    - CREATE
+    - INSERT
+    - UPDATE
+    - DELETE
+    - ALTER
+    - DROP
