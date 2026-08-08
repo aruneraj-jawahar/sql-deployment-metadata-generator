@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-from metadata import SQLMetadata
+from src.metadata import SQLMetadata
 
 
 class SQLParser:
