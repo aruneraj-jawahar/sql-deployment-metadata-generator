@@ -70,8 +70,10 @@ def test_excel_contains_expected_columns(tmp_path):
     )
 
     dataframe = pd.read_excel(
-        output_file
-    )
+    output_file,
+    sheet_name="Deployment Metadata",
+    header=3
+)
 
     expected_columns = [
         "File Name",
@@ -105,8 +107,10 @@ def test_excel_data_is_written_correctly(tmp_path):
     )
 
     dataframe = pd.read_excel(
-        output_file
-    )
+    output_file,
+    sheet_name="Deployment Metadata",
+    header=3
+)
 
     assert dataframe.iloc[0]["File Name"] == "customer_hub.sql"
     assert dataframe.iloc[0]["Deployment Group"] == "CUSTOMER_DATA"
@@ -143,8 +147,10 @@ def test_records_are_sorted_by_group_and_sequence(tmp_path):
     )
 
     dataframe = pd.read_excel(
-        output_file
-    )
+    output_file,
+    sheet_name="Deployment Metadata",
+    header=3
+)
 
     assert list(dataframe["Sequence"]) == [10, 20]
 
@@ -187,7 +193,7 @@ def test_excel_header_is_frozen(tmp_path):
     workbook = load_workbook(output_file)
     worksheet = workbook.active
 
-    assert worksheet.freeze_panes == "A2"
+    assert worksheet.freeze_panes == "A5"
 
 
 def test_excel_contains_table(tmp_path):
