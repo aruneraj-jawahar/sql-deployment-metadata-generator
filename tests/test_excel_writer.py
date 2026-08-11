@@ -163,3 +163,55 @@ def test_empty_metadata_raises_error(tmp_path):
             [],
             output_file
         )
+
+def test_excel_header_is_frozen(tmp_path):
+
+    metadata = create_metadata(
+        "customer_hub.sql",
+        "CUSTOMER_DATA",
+        10,
+        "CREATE",
+        "TABLE",
+        "customer_hub",
+    )
+
+    output_file = tmp_path / "deployment_metadata.xlsx"
+
+    ExcelWriter().write(
+        [metadata],
+        output_file
+    )
+
+    from openpyxl import load_workbook
+
+    workbook = load_workbook(output_file)
+    worksheet = workbook.active
+
+    assert worksheet.freeze_panes == "A2"
+
+
+def test_excel_contains_table(tmp_path):
+
+    metadata = create_metadata(
+        "customer_hub.sql",
+        "CUSTOMER_DATA",
+        10,
+        "CREATE",
+        "TABLE",
+        "customer_hub",
+    )
+
+    output_file = tmp_path / "deployment_metadata.xlsx"
+
+    ExcelWriter().write(
+        [metadata],
+        output_file
+    )
+
+    from openpyxl import load_workbook
+
+    workbook = load_workbook(output_file)
+    worksheet = workbook.active
+
+    assert len(worksheet.tables) == 1
+    assert "DeploymentMetadata" in worksheet.tables
